@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getErrorMessage } from '@/lib/error-message';
 import { createPrompt, listPrompts } from '@/lib/prompt-service';
 import { promptSchema } from '@/lib/validators';
 

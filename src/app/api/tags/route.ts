@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getErrorMessage } from '@/lib/error-message';
 import { listTags } from '@/lib/prompt-service';
 
 export async function GET() {

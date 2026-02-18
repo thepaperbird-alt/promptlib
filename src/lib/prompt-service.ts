@@ -30,7 +30,11 @@ export async function listPrompts(filters: PromptFilters): Promise<PromptListRes
   const rows = (data ?? []) as (Prompt & { total_count: number })[];
 
   return {
-    data: rows.map(({ total_count: _ignored, ...rest }) => rest),
+    data: rows.map((row) => {
+      const { total_count, ...rest } = row;
+      void total_count;
+      return rest;
+    }),
     count: rows[0]?.total_count ?? 0,
     page,
     pageSize
