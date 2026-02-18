@@ -12,7 +12,6 @@ interface PromptDetailDialogProps {
   prompt: Prompt | null;
   onOpenChange: (open: boolean) => void;
   onEdit: (prompt: Prompt) => void;
-  onDuplicate: (id: string) => Promise<void>;
   onToggleFavorite: (id: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
 }
@@ -22,7 +21,6 @@ export function PromptDetailDialog({
   prompt,
   onOpenChange,
   onEdit,
-  onDuplicate,
   onToggleFavorite,
   onDelete
 }: PromptDetailDialogProps) {
@@ -111,8 +109,8 @@ export function PromptDetailDialog({
             <Button variant="outline" onClick={() => onEdit(prompt)}>
               <Pencil size={14} className="mr-1" /> Edit
             </Button>
-            <Button variant="outline" onClick={() => onDuplicate(prompt.id)}>
-              <Copy size={14} className="mr-1" /> Duplicate
+            <Button variant="outline" onClick={handleCopyPromptText}>
+              <Copy size={14} className="mr-1" /> {copied ? 'Copied' : 'Copy'}
             </Button>
             <Button variant="outline" onClick={() => onToggleFavorite(prompt.id)}>
               <Heart size={14} className="mr-1" /> {prompt.favorite ? 'Unfavorite' : 'Favorite'}

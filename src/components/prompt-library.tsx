@@ -9,7 +9,6 @@ import { PromptFormDialog } from '@/components/prompt-form-dialog';
 import { SidebarFilters } from '@/components/sidebar-filters';
 import {
   createPrompt,
-  duplicatePrompt,
   fetchCategories,
   fetchPrompts,
   fetchTags,
@@ -128,15 +127,6 @@ export function PromptLibrary() {
       await refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to save prompt');
-    }
-  }
-
-  async function handleDuplicate(id: string) {
-    try {
-      await duplicatePrompt(id);
-      await refresh();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to duplicate prompt');
     }
   }
 
@@ -307,7 +297,6 @@ export function PromptLibrary() {
           setEditingPrompt(prompt);
           setFormOpen(true);
         }}
-        onDuplicate={handleDuplicate}
         onToggleFavorite={handleToggleFavorite}
         onDelete={handleDelete}
       />
