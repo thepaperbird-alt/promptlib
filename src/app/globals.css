@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  @apply border-line;
+}
+
+body {
+  @apply bg-bg text-text font-sans antialiased;
+}
+
+input,
+textarea,
+select,
+button {
+  @apply outline-none;
+}
+
+.minimal-input {
+  @apply bg-transparent border-b border-line px-0 py-3 text-2xl md:text-4xl tracking-tight placeholder:text-muted;
+}
+
+.panel {
+  @apply bg-surface shadow-panel border border-line;
+}
