@@ -3,6 +3,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import { Copy, Heart, Pencil, Trash2, X } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/button';
 import type { Prompt } from '@/types/prompt';
 
@@ -25,7 +26,20 @@ export function PromptDetailDialog({
   onToggleFavorite,
   onDelete
 }: PromptDetailDialogProps) {
+  const [copied, setCopied] = useState(false);
+
   if (!prompt) return null;
+
+  async function handleCopyPromptText() {
+    if (!prompt) return;
+    try {
+      await navigator.clipboard.writeText(prompt.prompt_text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -52,7 +66,17 @@ export function PromptDetailDialog({
 
           <div className="mt-6 space-y-6">
             <section>
-              <h3 className="mb-2 text-xs uppercase tracking-[0.2em] text-muted">Prompt</h3>
+              <div className="mb-2 flex items-center justify-between">
+                <h3 className="text-xs uppercase tracking-[0.2em] text-muted">Prompt</h3>
+                <button
+                  className="inline-flex items-center gap-1 border border-line px-2 py-1 text-xs text-muted hover:text-text hover:border-accent"
+                  onClick={handleCopyPromptText}
+                  type="button"
+                >
+                  <Copy size={12} />
+                  {copied ? 'Copied' : 'Copy'}
+                </button>
+              </div>
               <pre className="whitespace-pre-wrap border border-line p-3 text-sm">{prompt.prompt_text}</pre>
             </section>
 
