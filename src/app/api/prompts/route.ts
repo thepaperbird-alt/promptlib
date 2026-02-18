@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getErrorMessage } from '@/lib/error-message';
 import { createPrompt, listPrompts } from '@/lib/prompt-service';
 import { promptSchema } from '@/lib/validators';
 
@@ -16,7 +17,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: 'Failed to fetch prompts' }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error, 'Failed to fetch prompts') },
+      { status: 500 }
+    );
   }
 }
 
@@ -33,6 +37,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(prompt, { status: 201 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: 'Failed to create prompt' }, { status: 400 });
+    return NextResponse.json(
+      { error: getErrorMessage(error, 'Failed to create prompt') },
+      { status: 400 }
+    );
   }
 }

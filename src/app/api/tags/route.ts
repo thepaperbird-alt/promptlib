@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getErrorMessage } from '@/lib/error-message';
 import { listTags } from '@/lib/prompt-service';
 
 export async function GET() {
@@ -7,6 +8,6 @@ export async function GET() {
     return NextResponse.json({ data: tags });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: 'Failed to fetch tags' }, { status: 500 });
+    return NextResponse.json({ error: getErrorMessage(error, 'Failed to fetch tags') }, { status: 500 });
   }
 }
