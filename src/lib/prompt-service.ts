@@ -11,6 +11,33 @@ function cleanString(value?: string): string {
   return (value ?? '').trim();
 }
 
+const META_BATCH_SIZE = 1000;
+
+async function fetchAllPromptMetaRows<T extends 'tags' | 'category'>(
+  column: T
+): Promise<Array<{ tags?: string[]; category?: string }>> {
+  const rows: Array<{ tags?: string[]; category?: string }> = [];
+  let from = 0;
+
+  while (true) {
+    const to = from + META_BATCH_SIZE - 1;
+    const { data, error } = await supabaseAdmin
+      .from('prompts')
+      .select(column)
+      .range(from, to);
+
+    if (error) throw error;
+
+    const chunk = (data ?? []) as Array<{ tags?: string[]; category?: string }>;
+    rows.push(...chunk);
+
+    if (chunk.length < META_BATCH_SIZE) break;
+    from += META_BATCH_SIZE;
+  }
+
+  return rows;
+}
+
 export async function listPrompts(filters: PromptFilters): Promise<PromptListResponse> {
   const page = Math.max(filters.page ?? 1, 1);
   const pageSize = Math.min(Math.max(filters.pageSize ?? 30, 1), 100);
@@ -121,8 +148,7 @@ export async function toggleFavorite(id: string): Promise<Prompt> {
 }
 
 export async function listTags(): Promise<string[]> {
-  const { data, error } = await supabaseAdmin.from('prompts').select('tags');
-  if (error) throw error;
+  const data = await fetchAllPromptMetaRows('tags');
 
   const tagSet = new Set<string>();
   for (const row of data ?? []) {
@@ -135,10 +161,11 @@ export async function listTags(): Promise<string[]> {
 }
 
 export async function listCategories(): Promise<string[]> {
-  const { data, error } = await supabaseAdmin.from('prompts').select('category');
-  if (error) throw error;
+  const data = await fetchAllPromptMetaRows('category');
 
-  return Array.from(new Set((data ?? []).map((x) => x.category).filter(Boolean))).sort((a, b) =>
-    a.localeCompare(b)
-  );
+  const categories = (data ?? [])
+    .map((x) => x.category)
+    .filter((value): value is string => typeof value === 'string' && value.length > 0);
+
+  return Array.from(new Set(categories)).sort((a, b) => a.localeCompare(b));
 }
