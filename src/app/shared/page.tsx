@@ -1,11 +1,5 @@
-import { PromptLibrary } from '@/components/prompt-library';
+import { SharedPromptLibrary } from '@/components/shared-prompt-library';
 
 export default function SharedPromptLibraryPage() {
-  return (
-    <PromptLibrary
-      readOnly
-      title="SHARED PROMPTS."
-      subtitle="Read-only prompt library for browsing and copying prompts."
-    />
-  );
+  return <SharedPromptLibrary />;
 }

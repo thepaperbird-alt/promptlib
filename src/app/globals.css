@@ -28,3 +28,37 @@ button {
 .panel {
   @apply bg-surface shadow-panel border border-line;
 }
+
+.shared-board {
+  background:
+    radial-gradient(circle at top left, rgba(255, 220, 234, 0.9), transparent 28%),
+    radial-gradient(circle at top right, rgba(193, 244, 255, 0.85), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(255, 239, 163, 0.8), transparent 20%),
+    #fffdf8;
+}
+
+.shared-note {
+  position: relative;
+  border: 1px solid rgba(20, 20, 20, 0.12);
+  box-shadow: 0 18px 35px rgba(29, 32, 38, 0.08);
+}
+
+.shared-note::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 22px;
+  width: 92px;
+  height: 26px;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid rgba(20, 20, 20, 0.12);
+  border-bottom: 0;
+  background: inherit;
+}
+
+.shared-paper {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(254, 251, 246, 0.98)),
+    #fff;
+  box-shadow: 0 24px 60px rgba(28, 34, 38, 0.16);
+}
