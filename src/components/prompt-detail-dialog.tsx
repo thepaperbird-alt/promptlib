@@ -11,15 +11,17 @@ interface PromptDetailDialogProps {
   open: boolean;
   prompt: Prompt | null;
   onOpenChange: (open: boolean) => void;
-  onEdit: (prompt: Prompt) => void;
-  onToggleFavorite: (id: string) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
+  readOnly?: boolean;
+  onEdit?: (prompt: Prompt) => void;
+  onToggleFavorite?: (id: string) => Promise<void>;
+  onDelete?: (id: string) => Promise<void>;
 }
 
 export function PromptDetailDialog({
   open,
   prompt,
   onOpenChange,
+  readOnly = false,
   onEdit,
   onToggleFavorite,
   onDelete
@@ -106,18 +108,24 @@ export function PromptDetailDialog({
           </div>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            <Button variant="outline" onClick={() => onEdit(prompt)}>
-              <Pencil size={14} className="mr-1" /> Edit
-            </Button>
+            {!readOnly && onEdit && (
+              <Button variant="outline" onClick={() => onEdit(prompt)}>
+                <Pencil size={14} className="mr-1" /> Edit
+              </Button>
+            )}
             <Button variant="outline" onClick={handleCopyPromptText}>
               <Copy size={14} className="mr-1" /> {copied ? 'Copied' : 'Copy'}
             </Button>
-            <Button variant="outline" onClick={() => onToggleFavorite(prompt.id)}>
-              <Heart size={14} className="mr-1" /> {prompt.favorite ? 'Unfavorite' : 'Favorite'}
-            </Button>
-            <Button variant="danger" onClick={() => onDelete(prompt.id)}>
-              <Trash2 size={14} className="mr-1" /> Delete
-            </Button>
+            {!readOnly && onToggleFavorite && (
+              <Button variant="outline" onClick={() => onToggleFavorite(prompt.id)}>
+                <Heart size={14} className="mr-1" /> {prompt.favorite ? 'Unfavorite' : 'Favorite'}
+              </Button>
+            )}
+            {!readOnly && onDelete && (
+              <Button variant="danger" onClick={() => onDelete(prompt.id)}>
+                <Trash2 size={14} className="mr-1" /> Delete
+              </Button>
+            )}
           </div>
         </Dialog.Content>
       </Dialog.Portal>

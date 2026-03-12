@@ -20,7 +20,17 @@ import type { Prompt, PromptCreateInput } from '@/types/prompt';
 
 const PAGE_SIZE = 30;
 
-export function PromptLibrary() {
+interface PromptLibraryProps {
+  readOnly?: boolean;
+  title?: string;
+  subtitle?: string;
+}
+
+export function PromptLibrary({
+  readOnly = false,
+  title = 'PROMPT LIBRARY.',
+  subtitle = 'Search, filter, and browse prompts.'
+}: PromptLibraryProps) {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
@@ -171,16 +181,19 @@ export function PromptLibrary() {
         <section className="flex-1 space-y-4">
           <header className="panel p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h1 className="text-5xl font-medium tracking-tight md:text-7xl">PROMPT LIBRARY.</h1>
-              <Button
-                onClick={() => {
-                  setEditingPrompt(null);
-                  setFormOpen(true);
-                }}
-              >
-                <Plus size={14} className="mr-1" /> New Prompt
-              </Button>
+              <h1 className="text-5xl font-medium tracking-tight md:text-7xl">{title}</h1>
+              {!readOnly && (
+                <Button
+                  onClick={() => {
+                    setEditingPrompt(null);
+                    setFormOpen(true);
+                  }}
+                >
+                  <Plus size={14} className="mr-1" /> New Prompt
+                </Button>
+              )}
             </div>
+            <p className="mt-3 text-sm text-muted">{subtitle}</p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <div className="relative min-w-[260px] flex-1">
@@ -279,6 +292,7 @@ export function PromptLibrary() {
         </section>
       </div>
 
+      {!readOnly && (
       <PromptFormDialog
         open={formOpen}
         onOpenChange={(value) => {
@@ -288,17 +302,23 @@ export function PromptLibrary() {
         onSubmit={handleCreateOrUpdate}
         initial={editingPrompt}
       />
+      )}
 
       <PromptDetailDialog
         open={detailOpen}
         prompt={selectedPrompt}
         onOpenChange={setDetailOpen}
-        onEdit={(prompt) => {
-          setEditingPrompt(prompt);
-          setFormOpen(true);
-        }}
-        onToggleFavorite={handleToggleFavorite}
-        onDelete={handleDelete}
+        readOnly={readOnly}
+        onEdit={
+          readOnly
+            ? undefined
+            : (prompt) => {
+                setEditingPrompt(prompt);
+                setFormOpen(true);
+              }
+        }
+        onToggleFavorite={readOnly ? undefined : handleToggleFavorite}
+        onDelete={readOnly ? undefined : handleDelete}
       />
     </main>
   );
