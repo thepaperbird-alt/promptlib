@@ -271,9 +271,9 @@ export function SharedPromptLibrary() {
               <div className="inline-flex rounded-full bg-[#fff15a] px-3 py-1 text-[11px] uppercase tracking-[0.2em]">
                 Shared View
               </div>
-              <h1 className="mt-4 max-w-4xl text-4xl leading-none md:text-7xl">Sticky Prompt Shelf</h1>
+              <h1 className="mt-4 max-w-4xl text-4xl leading-none md:text-7xl">Prompt Shelf</h1>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-black/65 md:text-base">
-                Browse prompts, peek inside, and copy the ones you want to use. This page is read-only by design.
+                by Mahesh Ravi
               </p>
             </div>
 
