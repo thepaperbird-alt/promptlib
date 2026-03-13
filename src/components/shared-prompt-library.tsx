@@ -272,11 +272,11 @@ export function SharedPromptLibrary() {
               <div className="inline-flex rounded-full bg-[#fff15a] px-3 py-1 text-[11px] uppercase tracking-[0.2em]">
                 Shared View
               </div>
-              <h1 className="mt-4 max-w-4xl text-4xl leading-none md:text-7xl">Prompt Shelf</h1>
+              <h1 className="mt-4 max-w-4xl text-3xl leading-none md:text-7xl">Prompt Shelf</h1>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-black/65 md:text-base">
                 by Mahesh Ravi
               </p>
-              <p className="mt-3 max-w-3xl text-[10px] uppercase tracking-[0.14em] text-black/40 md:hidden">
+              <p className="mt-3 hidden max-w-3xl text-[10px] uppercase tracking-[0.14em] text-black/40 md:hidden">
                 {categoryPreview || 'No categories yet'}
               </p>
             </div>
@@ -295,7 +295,7 @@ export function SharedPromptLibrary() {
                 />
               </div>
 
-              <div className="flex items-center justify-between rounded-[22px] border border-black/10 bg-white px-4 py-3 text-xs uppercase tracking-[0.16em] text-black/45">
+              <div className="hidden items-center justify-between rounded-[22px] border border-black/10 bg-white px-4 py-3 text-xs uppercase tracking-[0.16em] text-black/45 md:flex">
                 <span>{totalCount} prompts</span>
                 <div className="flex gap-2">
                   <button
@@ -457,7 +457,7 @@ export function SharedPromptLibrary() {
             <button
               type="button"
               onClick={resetFilters}
-              className="w-full rounded-[22px] border border-black/10 bg-[#ffe8f3] px-4 py-3 text-sm uppercase tracking-[0.16em] text-[#3b2430]"
+              className="hidden w-full rounded-[22px] border border-black/10 bg-[#ffe8f3] px-4 py-3 text-sm uppercase tracking-[0.16em] text-[#3b2430] lg:block"
             >
               Reset board
             </button>
