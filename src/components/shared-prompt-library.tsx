@@ -261,6 +261,7 @@ export function SharedPromptLibrary() {
   }
 
   const featuredTags = useMemo(() => tags.slice(0, 18), [tags]);
+  const categoryPreview = useMemo(() => categories.slice(0, 10).join(' • '), [categories]);
 
   return (
     <main className="shared-board min-h-screen text-[#1e1a18]">
@@ -274,6 +275,9 @@ export function SharedPromptLibrary() {
               <h1 className="mt-4 max-w-4xl text-4xl leading-none md:text-7xl">Prompt Shelf</h1>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-black/65 md:text-base">
                 by Mahesh Ravi
+              </p>
+              <p className="mt-3 max-w-3xl text-[10px] uppercase tracking-[0.14em] text-black/40 md:hidden">
+                {categoryPreview || 'No categories yet'}
               </p>
             </div>
 
@@ -322,7 +326,48 @@ export function SharedPromptLibrary() {
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
           <aside className="space-y-5">
-            <section className="rounded-[24px] border border-black/8 bg-transparent p-3 pt-5 text-[#201d18] shadow-none">
+            <details className="rounded-[24px] border border-black/8 bg-transparent p-3 pt-4 text-[#201d18] shadow-none lg:hidden">
+              <summary className="cursor-pointer list-none text-[11px] uppercase tracking-[0.16em] text-black/55">
+                Categories
+              </summary>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('');
+                    setPage(1);
+                  }}
+                  className={cn(
+                    'rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]',
+                    selectedCategory === '' ? 'border-black/20 bg-[#fff7f1]' : 'border-black/10 bg-white/40'
+                  )}
+                >
+                  All
+                </button>
+                {categories.map((category, index) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setPage(1);
+                    }}
+                    className={cn(
+                      'rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]',
+                      selectedCategory === category
+                        ? 'border-black/20 bg-[#fff7f1]'
+                        : index % 2 === 0
+                          ? 'border-black/10 bg-white/55'
+                          : 'border-black/10 bg-transparent'
+                    )}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            </details>
+
+            <section className="hidden rounded-[24px] border border-black/8 bg-transparent p-3 pt-5 text-[#201d18] shadow-none lg:block">
               <div className="absolute left-5 top-[-8px] rounded-t-[12px] border border-black/10 bg-white px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]">
                 Categories
               </div>
@@ -363,7 +408,30 @@ export function SharedPromptLibrary() {
               </div>
             </section>
 
-            <section className="rounded-[24px] border border-black/8 bg-transparent p-3 pt-5 text-[#183033] shadow-none">
+            <details className="rounded-[24px] border border-black/8 bg-transparent p-3 pt-4 text-[#183033] shadow-none lg:hidden">
+              <summary className="cursor-pointer list-none text-[11px] uppercase tracking-[0.16em] text-black/55">
+                Tags
+              </summary>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {featuredTags.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => toggleTag(tag)}
+                    className={cn(
+                      'rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]',
+                      selectedTags.includes(tag)
+                        ? 'border-black/20 bg-[#fff7f1]'
+                        : 'border-black/10 bg-white/50'
+                    )}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </details>
+
+            <section className="hidden rounded-[24px] border border-black/8 bg-transparent p-3 pt-5 text-[#183033] shadow-none lg:block">
               <div className="absolute left-5 top-[-8px] rounded-t-[12px] border border-black/10 bg-white px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]">
                 Tags
               </div>
