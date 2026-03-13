@@ -322,11 +322,11 @@ export function SharedPromptLibrary() {
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)]">
           <aside className="space-y-5">
-            <section className="shared-note rounded-[24px] bg-[#fff15a] p-5 pt-8 text-[#201d18]">
-              <div className="absolute left-6 top-[-10px] rounded-t-[12px] border border-black/10 bg-[#fff15a] px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
+            <section className="rounded-[24px] border border-black/8 bg-transparent p-3 pt-5 text-[#201d18] shadow-none">
+              <div className="absolute left-5 top-[-8px] rounded-t-[12px] border border-black/10 bg-white px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]">
                 Categories
               </div>
-              <div className="mt-1 flex flex-wrap gap-2">
+              <div className="mt-1 flex flex-wrap gap-1.5">
                 <button
                   type="button"
                   onClick={() => {
@@ -334,8 +334,8 @@ export function SharedPromptLibrary() {
                     setPage(1);
                   }}
                   className={cn(
-                    'rounded-full border px-3 py-1.5 text-xs uppercase tracking-[0.12em]',
-                    selectedCategory === '' ? 'border-black/20 bg-white' : 'border-black/10 bg-transparent'
+                    'rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]',
+                    selectedCategory === '' ? 'border-black/20 bg-[#fff7f1]' : 'border-black/10 bg-white/40'
                   )}
                 >
                   All
@@ -349,12 +349,12 @@ export function SharedPromptLibrary() {
                       setPage(1);
                     }}
                     className={cn(
-                      'rounded-full border px-3 py-1.5 text-xs uppercase tracking-[0.12em]',
+                      'rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]',
                       selectedCategory === category
-                        ? 'border-black/20 bg-white'
+                        ? 'border-black/20 bg-[#fff7f1]'
                         : index % 2 === 0
-                          ? 'border-black/10 bg-[#fff7f1]'
-                          : 'border-black/10 bg-[#ffffff80]'
+                          ? 'border-black/10 bg-white/55'
+                          : 'border-black/10 bg-transparent'
                     )}
                   >
                     {category}
@@ -363,21 +363,21 @@ export function SharedPromptLibrary() {
               </div>
             </section>
 
-            <section className="shared-note rounded-[24px] bg-[#9ff1f1] p-5 pt-8 text-[#183033]">
-              <div className="absolute left-6 top-[-10px] rounded-t-[12px] border border-black/10 bg-[#9ff1f1] px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
+            <section className="rounded-[24px] border border-black/8 bg-transparent p-3 pt-5 text-[#183033] shadow-none">
+              <div className="absolute left-5 top-[-8px] rounded-t-[12px] border border-black/10 bg-white px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]">
                 Tags
               </div>
-              <div className="mt-1 flex flex-wrap gap-2">
+              <div className="mt-1 flex flex-wrap gap-1.5">
                 {featuredTags.map((tag) => (
                   <button
                     key={tag}
                     type="button"
                     onClick={() => toggleTag(tag)}
                     className={cn(
-                      'rounded-full border px-3 py-1.5 text-xs uppercase tracking-[0.12em]',
+                      'rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]',
                       selectedTags.includes(tag)
-                        ? 'border-black/20 bg-white'
-                        : 'border-black/10 bg-[#ffffff80]'
+                        ? 'border-black/20 bg-[#fff7f1]'
+                        : 'border-black/10 bg-white/50'
                     )}
                   >
                     {tag}
