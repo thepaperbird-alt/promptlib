@@ -1,7 +1,6 @@
 'use client';
 
 import * as Dialog from '@radix-ui/react-dialog';
-import Image from 'next/image';
 import { Grid2X2, List, Search, Copy, X } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo, useState } from 'react';
 import { fetchCategories, fetchPrompts, fetchTags } from '@/lib/api';
@@ -94,12 +93,12 @@ function SharedPromptCard({
         <div className="absolute bottom-4 right-4 flex items-end gap-2">
           <div className="h-7 w-8 rounded-l-[14px] rounded-r-[8px] border border-black/10 border-r-0 bg-white/45" />
           <div className="relative h-16 w-20 overflow-hidden rounded-[14px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
-            <Image
+            <img
               src={prompt.sample_image_url}
               alt={`${prompt.title} thumbnail`}
-              fill
-              className="object-cover"
-              sizes="80px"
+              className="h-full w-full object-cover"
+              loading="lazy"
+              referrerPolicy="no-referrer"
             />
           </div>
         </div>
@@ -186,12 +185,12 @@ function SharedPromptDetail({
               <section className="rounded-[24px] border border-black/10 bg-[#ffe8f3] p-5">
                 <h3 className="text-xs uppercase tracking-[0.22em] text-black/45">Sample Image</h3>
                 <div className="relative mt-4 aspect-video overflow-hidden rounded-[18px] border border-black/10 bg-white">
-                  <Image
+                  <img
                     src={prompt.sample_image_url}
                     alt={prompt.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 900px"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
                   />
                 </div>
               </section>
