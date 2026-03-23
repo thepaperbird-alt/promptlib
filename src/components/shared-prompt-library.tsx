@@ -4,6 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Grid2X2, List, Search, Copy, X } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo, useState } from 'react';
 import { fetchCategories, fetchPrompts, fetchTags } from '@/lib/api';
+import { normalizeImageUrl } from '@/lib/image-url';
 import { cn } from '@/lib/utils';
 import type { Prompt } from '@/types/prompt';
 
@@ -43,6 +44,7 @@ function SharedPromptCard({
   onClick: (prompt: Prompt) => void;
 }) {
   const style = NOTE_STYLES[index % NOTE_STYLES.length];
+  const thumbnailUrl = normalizeImageUrl(prompt.sample_image_url);
   const rotation = ['-rotate-[1.4deg]', 'rotate-[1.1deg]', '-rotate-[0.6deg]', 'rotate-[1.8deg]'][
     index % 4
   ];
@@ -56,7 +58,7 @@ function SharedPromptCard({
         style.card,
         style.accent,
         rotation,
-        prompt.sample_image_url && 'pb-20',
+        thumbnailUrl && 'pb-20',
         view === 'list' && 'w-full'
       )}
     >
@@ -89,12 +91,12 @@ function SharedPromptCard({
         ))}
       </div>
 
-      {prompt.sample_image_url && (
+      {thumbnailUrl && (
         <div className="absolute bottom-4 right-4 flex items-end gap-2">
           <div className="h-7 w-8 rounded-l-[14px] rounded-r-[8px] border border-black/10 border-r-0 bg-white/45" />
           <div className="relative h-16 w-20 overflow-hidden rounded-[14px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <img
-              src={prompt.sample_image_url}
+              src={thumbnailUrl}
               alt={`${prompt.title} thumbnail`}
               className="h-full w-full object-cover"
               loading="lazy"
@@ -119,6 +121,7 @@ function SharedPromptDetail({
   const [copied, setCopied] = useState(false);
 
   if (!prompt) return null;
+  const normalizedImageUrl = normalizeImageUrl(prompt.sample_image_url);
 
   async function handleCopy() {
     if (!prompt) return;
@@ -181,12 +184,12 @@ function SharedPromptDetail({
               </div>
             </section>
 
-            {prompt.sample_image_url && (
+            {normalizedImageUrl && (
               <section className="rounded-[24px] border border-black/10 bg-[#ffe8f3] p-5">
                 <h3 className="text-xs uppercase tracking-[0.22em] text-black/45">Sample Image</h3>
                 <div className="relative mt-4 aspect-video overflow-hidden rounded-[18px] border border-black/10 bg-white">
                   <img
-                    src={prompt.sample_image_url}
+                    src={normalizedImageUrl}
                     alt={prompt.title}
                     className="h-full w-full object-cover"
                     loading="lazy"

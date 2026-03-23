@@ -4,6 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useMemo, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/button';
+import { normalizeImageUrl } from '@/lib/image-url';
 import { normalizeTags } from '@/lib/utils';
 import type { Prompt, PromptCreateInput } from '@/types/prompt';
 
@@ -56,7 +57,7 @@ export function PromptFormDialog({
         model,
         tags: normalizeTags(tags),
         category,
-        sample_image_url: sampleImageUrl || null,
+        sample_image_url: normalizeImageUrl(sampleImageUrl),
         favorite
       });
 

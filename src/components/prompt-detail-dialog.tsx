@@ -1,10 +1,10 @@
 'use client';
 
 import * as Dialog from '@radix-ui/react-dialog';
-import Image from 'next/image';
 import { Copy, Heart, Pencil, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/button';
+import { normalizeImageUrl } from '@/lib/image-url';
 import type { Prompt } from '@/types/prompt';
 
 interface PromptDetailDialogProps {
@@ -29,6 +29,7 @@ export function PromptDetailDialog({
   const [copied, setCopied] = useState(false);
 
   if (!prompt) return null;
+  const normalizedImageUrl = normalizeImageUrl(prompt.sample_image_url);
 
   async function handleCopyPromptText() {
     if (!prompt) return;
@@ -91,16 +92,16 @@ export function PromptDetailDialog({
               </div>
             </section>
 
-            {prompt.sample_image_url && (
+            {normalizedImageUrl && (
               <section>
                 <h3 className="mb-2 text-xs uppercase tracking-[0.2em] text-muted">Sample Image</h3>
-                <div className="relative aspect-video w-full overflow-hidden border border-line">
-                  <Image
-                    src={prompt.sample_image_url}
+                <div className="aspect-video w-full overflow-hidden border border-line">
+                  <img
+                    src={normalizedImageUrl}
                     alt={prompt.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 500px"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
                   />
                 </div>
               </section>
