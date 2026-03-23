@@ -57,6 +57,7 @@ function SharedPromptCard({
         style.card,
         style.accent,
         rotation,
+        prompt.sample_image_url && 'pb-20',
         view === 'list' && 'w-full'
       )}
     >
@@ -88,6 +89,21 @@ function SharedPromptCard({
           </span>
         ))}
       </div>
+
+      {prompt.sample_image_url && (
+        <div className="absolute bottom-4 right-4 flex items-end gap-2">
+          <div className="h-7 w-8 rounded-l-[14px] rounded-r-[8px] border border-black/10 border-r-0 bg-white/45" />
+          <div className="relative h-16 w-20 overflow-hidden rounded-[14px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+            <Image
+              src={prompt.sample_image_url}
+              alt={`${prompt.title} thumbnail`}
+              fill
+              className="object-cover"
+              sizes="80px"
+            />
+          </div>
+        </div>
+      )}
     </button>
   );
 }
